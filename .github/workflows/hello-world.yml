@@ -32,3 +32,5 @@ jobs:
           git add hello-world.html
           git commit -m "Update hello-world.html"
           git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
