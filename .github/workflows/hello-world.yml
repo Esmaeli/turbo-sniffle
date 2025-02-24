@@ -1,17 +1,19 @@
 name: Hello World Workflow
 
 on:
+  workflow_dispatch:  # Allows manual triggering
   schedule:
     - cron: '0 * * * *'  # Runs every hour at the 0th minute
-  workflow_dispatch:  # Allows manual triggering
-
+permissions:
+  contents: write
+  
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      - name: Check out this repo
+        uses: actions/checkout@vw
 
       - name: Create Hello World HTML file
         run: |
