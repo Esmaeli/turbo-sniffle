@@ -1,0 +1,44 @@
+name: Regenerate HTML File
+
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Run every day at midnight UTC
+  push:
+    branches:
+      - main  # Trigger on push to the main branch
+
+jobs:
+  regenerate-html:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+
+      - name: Run Python script to generate HTML
+        run: |
+          python scripts/generate_html.py
+
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+
+          if [[ -n $(git status --porcelain) ]]; then
+            git add index.html
+            git commit -m "Auto-generated HTML file"
+            git push https://x-access-token:${gpd}@github.com/Esmaeli/turbo-sniffle.git main
+          else
+            echo "No changes to commit."
+          fi
