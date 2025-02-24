@@ -26,11 +26,11 @@ jobs:
 
       - name: Run Python script to generate HTML
         run: |
-          python scripts/generate_html.py
+          python scripts/sports.py
 
       - name: Commit and push changes
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.gpd }}
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
